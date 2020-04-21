@@ -23,12 +23,16 @@ const AdminMeeting = () => {
     setApiKey(target.value);
   };
 
-  
+  const clearApiKey = () => {
+    localStorage.removeItem('API_KEY');
+    setApiKey(null);
+  };  
 
   if(!apiKey) return (<input type='text' onChange={apiKeyChangeHandler} placeholder='API_KEY' />);
 
   return (
     <>
+      <button onClick={clearApiKey}>Clear API Key</button>
       <Form 
         apiKey={apiKey} 
         meetings={meetings} 

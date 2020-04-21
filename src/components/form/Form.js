@@ -4,7 +4,7 @@ import Checkbox from './Checkbox';
 import postApi from '../../services/postApi';
 import styles from './Form.css';
 
-const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiKey }) => {
+const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
   const [admin, setAdmin] = useState(false);
   const [createdApi, setCreatedApi] = useState();
   const [groupName, setGroupName] = useState('Group Name');
@@ -43,15 +43,10 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiK
       );
     });
 
-  const clearApiKey = () => {
-    localStorage.removeItem('API_KEY');
-    setApiKey(null);
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit} className={styles}>
-        <button onClick={clearApiKey}>Clear API Key</button>
+        
         <input type='text' value={groupName} onChange={changeGroupName} />
         {checkboxes}
         <label>
@@ -72,7 +67,6 @@ Form.propTypes = {
   meetings: PropTypes.array.isRequired,
   selectedMeetings: PropTypes.object.isRequired,
   setSelectedMeetings: PropTypes.func.isRequired,
-  setApiKey: PropTypes.func.isRequired,
   apiKey: PropTypes.string.isRequired
 };
 
