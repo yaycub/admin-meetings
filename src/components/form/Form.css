@@ -4,7 +4,37 @@ Form{
   justify-content: center;
   align-items: center;
 
-  input{
-    margin: 5px;
+  div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
+  
+
+  label{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    width: 45vw;
+    height: 5vw;
+    background-color: black;
+    color: white;
+  }
+}
+
+.admin{
+  background-color: white;
+  width: 10vw;
+  color: black;
+}
+
+.groupName{
+  width: 45vw;
+  padding: 3.5px;
+  height: 5vw;
+  font-size: 18px;
 }

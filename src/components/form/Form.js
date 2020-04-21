@@ -38,7 +38,7 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
     setGroupName(target.value);
   };
 
-  const checkboxes = meetings.filter(meeting => { if(meeting.type === 4) return meeting; })
+  const checkboxes = meetings.filter(meeting => { if(meeting.type === 4 || meeting.type === 8) return meeting; })
     .map(({ name, zoomId }, i) => {
       return (
         <Checkbox name={name} value={zoomId} onChange={onMeetingChange} key={i} />
@@ -48,9 +48,11 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles}>
-        <input type='text' value={groupName} onChange={changeGroupName} />
-        {checkboxes}
-        <label>
+        <input type='text' value={groupName} onChange={changeGroupName} className={styles.groupName} />
+        <div>
+          {checkboxes}
+        </div>
+        <label className={styles.admin}>
       Admin?
           <input type="checkbox" value='admin' onChange={adminChange} />
         </label>
