@@ -6,7 +6,7 @@ const AdminMeeting = () => {
   const [meetings, setMeetings] = useState([]);
   const [selectedMeetings, setSelectedMeetings] = useState({});
   const [apiKey, setApiKey] = useState();
-  const [groupName, setGroupName] = useState('Group Name');
+  
 
   useEffect(() => {
     if(apiKey){
@@ -23,9 +23,7 @@ const AdminMeeting = () => {
     setApiKey(target.value);
   };
 
-  const changeGroupName = ({ target }) => {
-    setGroupName(target.value);
-  };
+  
 
   if(!apiKey) return (<input type='text' onChange={apiKeyChangeHandler} placeholder='API_KEY' />);
 
@@ -37,8 +35,6 @@ const AdminMeeting = () => {
         selectedMeetings={selectedMeetings}
         setSelectedMeetings={setSelectedMeetings}
         setApiKey={setApiKey}
-        groupName={groupName}
-        changeGroupName={changeGroupName}
       />
     </>
   );

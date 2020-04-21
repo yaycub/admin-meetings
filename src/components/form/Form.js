@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from './Checkbox';
 import postApi from '../../services/postApi';
+import styles from './Form.css';
 
-const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiKey, groupName, changeGroupName }) => {
+const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiKey }) => {
   const [admin, setAdmin] = useState(false);
   const [createdApi, setCreatedApi] = useState();
+  const [groupName, setGroupName] = useState('Group Name');
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,6 +32,10 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiK
     setSelectedMeetings(state => ({ ...state, [value]: checked }));
   };
 
+  const changeGroupName = ({ target }) => {
+    setGroupName(target.value);
+  };
+
   const checkboxes = meetings.filter(meeting => { if(meeting.type === 4) return meeting; })
     .map(({ name, zoomId }, i) => {
       return (
@@ -44,7 +50,7 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiK
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles}>
         <button onClick={clearApiKey}>Clear API Key</button>
         <input type='text' value={groupName} onChange={changeGroupName} />
         {checkboxes}
@@ -53,7 +59,7 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiK
           <input type="checkbox" value='admin' onChange={adminChange} />
         </label>
       
-        <button>Submit</button>
+        <button>Create Key</button>
       </form>
       <p>
         {JSON.stringify(createdApi)}
@@ -67,8 +73,6 @@ Form.propTypes = {
   selectedMeetings: PropTypes.object.isRequired,
   setSelectedMeetings: PropTypes.func.isRequired,
   setApiKey: PropTypes.func.isRequired,
-  groupName: PropTypes.string.isRequired,
-  changeGroupName: PropTypes.func.isRequired,
   apiKey: PropTypes.string.isRequired
 };
 
