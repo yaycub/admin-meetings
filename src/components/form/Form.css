@@ -19,7 +19,7 @@ Form{
     align-items: center;
     margin: 5px;
     padding: 5px;
-    width: 45vw;
+    width: 40vw;
     height: 5vw;
     background-color: black;
     color: white;
@@ -35,6 +35,7 @@ Form{
 .groupName{
   width: 45vw;
   padding: 3.5px;
-  height: 5vw;
+  height: 2.5vw;
   font-size: 18px;
+  align-self: start;
 }
