@@ -5,11 +5,13 @@ Form{
   align-items: center;
 
   div{
+    border-top: 5px solid rebeccapurple;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    width: 750px;
   }
   
 
@@ -19,8 +21,8 @@ Form{
     align-items: center;
     margin: 5px;
     padding: 5px;
-    width: 40vw;
-    height: 5vw;
+    width: 350px;
+    height: 40px;
     background-color: black;
     color: white;
   }
@@ -33,9 +35,9 @@ Form{
 }
 
 .groupName{
-  width: 45vw;
+  width: 250px;
+  margin: 5px;
   padding: 3.5px;
-  height: 2.5vw;
+  height: 25px;
   font-size: 18px;
-  align-self: start;
 }
