@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Form from '../form/Form';
 import getMeetings from '../../services/getMeetings';
 
-//5e964d39e7179a2493c7ce49
-
 const AdminMeeting = () => {
   const [meetings, setMeetings] = useState([]);
   const [selectedMeetings, setSelectedMeetings] = useState({});
