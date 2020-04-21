@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import getMeetings from '../../services/getMeetings';
 import Checkbox from './Checkbox';
+import postApi from '../../services/postApi';
 
-const Form = ({ apiKey }) => {
-  const [meetings, setMeetings] = useState([]);
-  const [selectedMeetings, setSelectedMeetings] = useState({});
-
-  useEffect(() => {
-    getMeetings('5e964d39e7179a2493c7ce49')
-      .then(setMeetings);
-  }, []);
-
+const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, setApiKey, groupName, changeGroupName }) => {
+  const [admin, setAdmin] = useState(false);
+  const [createdApi, setCreatedApi] = useState();
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const selectedMeetingsArr = Object.keys(selectedMeetings).filter(meetingKey => { if(selectedMeetings[meetingKey]) return meetingKey; });
 
-    console.log(selectedMeetingsArr);
+    const data = {
+      title: groupName,
+      meetingIds: selectedMeetingsArr,
+      admin
+    };
+
+    postApi(apiKey, data)
+      .then(setCreatedApi);
+  };
+
+  const adminChange = () => {
+    setAdmin(state => !state);
   };
 
   const onMeetingChange = ({ target }) => {
@@ -24,21 +30,45 @@ const Form = ({ apiKey }) => {
     setSelectedMeetings(state => ({ ...state, [value]: checked }));
   };
 
-  const checkboxes = meetings.map((meeting, i) => {
-    return (
-      <Checkbox name={meeting.name} value={meeting.zoomId} onChange={onMeetingChange} key={i} />
-    );
-  });
+  const checkboxes = meetings.filter(meeting => { if(meeting.type === 4) return meeting; })
+    .map(({ name, zoomId }, i) => {
+      return (
+        <Checkbox name={name} value={zoomId} onChange={onMeetingChange} key={i} />
+      );
+    });
+
+  const clearApiKey = () => {
+    localStorage.removeItem('API_KEY');
+    setApiKey(null);
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {checkboxes}
-      <button>Submit</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <button onClick={clearApiKey}>Clear API Key</button>
+        <input type='text' value={groupName} onChange={changeGroupName} />
+        {checkboxes}
+        <label>
+      Admin?
+          <input type="checkbox" value='admin' onChange={adminChange} />
+        </label>
+      
+        <button>Submit</button>
+      </form>
+      <p>
+        {JSON.stringify(createdApi)}
+      </p>
+    </>
   );
 };
 
 Form.propTypes = {
+  meetings: PropTypes.array.isRequired,
+  selectedMeetings: PropTypes.object.isRequired,
+  setSelectedMeetings: PropTypes.func.isRequired,
+  setApiKey: PropTypes.func.isRequired,
+  groupName: PropTypes.string.isRequired,
+  changeGroupName: PropTypes.func.isRequired,
   apiKey: PropTypes.string.isRequired
 };
 

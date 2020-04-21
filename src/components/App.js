@@ -1,7 +1,12 @@
 import React from 'react';
-import Form from './form/Form';
+import AdminMeeting from './container/AdminMeetings';
 
 export default function App() {
-  return <Form />;
+  return (
+    <>
+      <h1>Alchemeetings Admin</h1>
+      <AdminMeeting />
+    </>
+  );
 }
   
