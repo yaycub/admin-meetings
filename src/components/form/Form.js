@@ -6,7 +6,9 @@ import styles from './Form.css';
 
 const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
   const [admin, setAdmin] = useState(false);
-  const [createdApi, setCreatedApi] = useState();
+  const [createdApi, setCreatedApi] = useState({
+    id: ''
+  });
   const [groupName, setGroupName] = useState('Group Name');
   
   const handleSubmit = (event) => {
@@ -46,7 +48,6 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles}>
-        
         <input type='text' value={groupName} onChange={changeGroupName} />
         {checkboxes}
         <label>
@@ -57,7 +58,7 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
         <button>Create Key</button>
       </form>
       <p>
-        {JSON.stringify(createdApi)}
+        {createdApi.id}
       </p>
     </>
   );
