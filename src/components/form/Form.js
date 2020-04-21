@@ -7,7 +7,7 @@ import styles from './Form.css';
 const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
   const [admin, setAdmin] = useState(false);
   const [createdApi, setCreatedApi] = useState({
-    id: ''
+    id: null
   });
   const [groupName, setGroupName] = useState('Group Name');
   
@@ -58,7 +58,7 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
         <button>Create Key</button>
       </form>
       <p>
-        {createdApi.id}
+        {createdApi.id ? 'Your API Key: ' + createdApi.id : ''}
       </p>
     </>
   );
