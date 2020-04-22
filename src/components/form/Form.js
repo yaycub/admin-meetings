@@ -4,11 +4,8 @@ import Checkbox from './Checkbox';
 import postApi from '../../services/postApi';
 import styles from './Form.css';
 
-const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey }) => {
+const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, createdApi, setCreatedApi }) => {
   const [admin, setAdmin] = useState(false);
-  const [createdApi, setCreatedApi] = useState({
-    id: null
-  });
   const [groupName, setGroupName] = useState('Group Name');
   
   const handleSubmit = (event) => {
@@ -70,7 +67,9 @@ Form.propTypes = {
   meetings: PropTypes.array.isRequired,
   selectedMeetings: PropTypes.object.isRequired,
   setSelectedMeetings: PropTypes.func.isRequired,
-  apiKey: PropTypes.string.isRequired
+  apiKey: PropTypes.string.isRequired,
+  createdApi: PropTypes.object.isRequired,
+  setCreatedApi: PropTypes.func.isRequired
 };
 
 export default Form;

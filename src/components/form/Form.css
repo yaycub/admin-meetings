@@ -25,8 +25,16 @@ Form{
     height: 40px;
     background-color: black;
     color: white;
+
+    input[type=checkbox]:checked + label{
+      background-color: rebeccapurple;
+    }
   }
+
+  
 }
+
+
 
 .admin{
   background-color: white;
@@ -43,5 +51,5 @@ Form{
 }
 
 .header{
-  text-align: center;
+  border-bottom: 2px solid steelblue;
 }

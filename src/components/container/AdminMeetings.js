@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Form from '../form/Form';
 import getMeetings from '../../services/getMeetings';
 import Keys from '../keys/Keys';
+import styles from './AdminMeeting.css';
 
 const AdminMeeting = () => {
   const [meetings, setMeetings] = useState([]);
   const [selectedMeetings, setSelectedMeetings] = useState({});
   const [apiKey, setApiKey] = useState();
+  const [createdApi, setCreatedApi] = useState({
+    id: null
+  });
   
 
   useEffect(() => {
@@ -34,17 +38,18 @@ const AdminMeeting = () => {
   return (
     <>
       <button onClick={clearApiKey}>Clear API Key</button>
-      <div>
-        <Keys apiKey={apiKey} />
+      <div className={styles.container}>
+        <Keys apiKey={apiKey} createdApi={createdApi} />
         <Form 
           apiKey={apiKey} 
           meetings={meetings} 
           selectedMeetings={selectedMeetings}
           setSelectedMeetings={setSelectedMeetings}
           setApiKey={setApiKey}
+          createdApi={createdApi}
+          setCreatedApi={setCreatedApi}
         />
       </div>
-      
     </>
   );
 };

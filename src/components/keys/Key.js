@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 const Key = ({ title, id, onDelete }) => (
   <>
     <h3>{title}</h3>
-    <p>{id}</p>
-    <button onClick={onDelete} value={id}>🗑</button>
+    <div>
+      <p>{id}</p>
+      <button onClick={onDelete} value={id}>🗑</button>
+    </div>
   </>
 );
 
