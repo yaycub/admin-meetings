@@ -53,12 +53,14 @@ const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, created
       Admin?
           <input type="checkbox" value='admin' onChange={adminChange} />
         </label>
-      
-        <button>Create Key</button>
+        <div>
+          <button>Create Key</button>
+          <p>
+            {createdApi.id ? 'Your API Key: ' + createdApi.id : ''}
+          </p>
+        </div>
+        
       </form>
-      <p>
-        {createdApi.id ? 'Your API Key: ' + createdApi.id : ''}
-      </p>
     </>
   );
 };
