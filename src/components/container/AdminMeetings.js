@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from '../form/Form';
 import getMeetings from '../../services/getMeetings';
+import Keys from '../keys/Keys';
 
 const AdminMeeting = () => {
   const [meetings, setMeetings] = useState([]);
@@ -33,13 +34,17 @@ const AdminMeeting = () => {
   return (
     <>
       <button onClick={clearApiKey}>Clear API Key</button>
-      <Form 
-        apiKey={apiKey} 
-        meetings={meetings} 
-        selectedMeetings={selectedMeetings}
-        setSelectedMeetings={setSelectedMeetings}
-        setApiKey={setApiKey}
-      />
+      <div>
+        <Keys apiKey={apiKey} />
+        <Form 
+          apiKey={apiKey} 
+          meetings={meetings} 
+          selectedMeetings={selectedMeetings}
+          setSelectedMeetings={setSelectedMeetings}
+          setApiKey={setApiKey}
+        />
+      </div>
+      
     </>
   );
 };
