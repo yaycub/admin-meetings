@@ -41,3 +41,7 @@ Form{
   height: 25px;
   font-size: 18px;
 }
+
+.header{
+  text-align: center;
+}
