@@ -1,12 +1,41 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from './Checkbox';
+import postApi from '../../services/postApi';
 import styles from './Form.css';
 
-// eslint-disable-next-line react/prop-types
-const MeetingCheckboxes = ({ meetings, onMeetingChange }) => {
-  // eslint-disable-next-line react/prop-types
-  const checkboxes = meetings.filter(meeting => meeting.type === 4 || meeting.type === 8)
+const Form = ({ meetings, setSelectedMeetings, selectedMeetings, apiKey, createdApi, setCreatedApi }) => {
+  const [admin, setAdmin] = useState(false);
+  const [groupName, setGroupName] = useState('Group Name');
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const selectedMeetingsArr = Object.keys(selectedMeetings).filter(meetingKey => { if(selectedMeetings[meetingKey]) return meetingKey; });
+
+    const data = {
+      title: groupName,
+      meetingIds: selectedMeetingsArr,
+      admin
+    };
+
+    postApi(apiKey, data)
+      .then(setCreatedApi);
+  };
+
+  const adminChange = () => {
+    setAdmin(state => !state);
+  };
+
+  const onMeetingChange = ({ target }) => {
+    const { value, checked } = target;
+    setSelectedMeetings(state => ({ ...state, [value]: checked }));
+  };
+
+  const changeGroupName = ({ target }) => {
+    setGroupName(target.value);
+  };
+
+  const checkboxes = meetings.filter(meeting => { if(meeting.type === 4 || meeting.type === 8) return meeting; })
     .map(({ name, zoomId }, i) => {
       return (
         <Checkbox name={name} value={zoomId} onChange={onMeetingChange} key={i} />
@@ -15,34 +44,10 @@ const MeetingCheckboxes = ({ meetings, onMeetingChange }) => {
 
   return (
     <>
-      {checkboxes}
-    </>
-  );
-};
-
-const Form = ({ meetings, createKey }) => {
-  const [admin, setAdmin] = useState(false);
-  const [groupName, setGroupName] = useState('');
-  const [selectedMeetings, setSelectedMeetings] = useState([]);
-  const [createdKey, setCreatedKey] = useState(null);
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const selectedMeetingIds = Object.keys(selectedMeetings).filter(key => selectedMeetings[key]);
-    createKey(groupName, selectedMeetingIds, admin)
-      .then(createdKey => setCreatedKey(createdKey));
-  };
-
-  const adminChange = () => setAdmin(state => !state);
-  const changeGroupName = ({ target }) => setGroupName(target.value);
-  const onMeetingChange = ({ target }) => setSelectedMeetings(state => ({ ...state, [target.value]: target.checked }));
-
-  return (
-    <>
       <form onSubmit={handleSubmit} className={styles}>
-        <input className={styles.groupName} type='text' value={groupName} onChange={changeGroupName} placeholder="Group Name" />
+        <input type='text' value={groupName} onChange={changeGroupName} className={styles.groupName} />
         <div>
-          <MeetingCheckboxes meetings={meetings} onMeetingChange={onMeetingChange} />
+          {checkboxes}
         </div>
         <label className={styles.admin}>
       Admin?
@@ -51,7 +56,7 @@ const Form = ({ meetings, createKey }) => {
         <div>
           <button>Create Key</button>
           <p>
-            {createdKey?.id ? 'Your API Key: ' + createdKey.id : ''}
+            {createdApi.id ? 'Your API Key: ' + createdApi.id : ''}
           </p>
         </div>
         
@@ -62,7 +67,11 @@ const Form = ({ meetings, createKey }) => {
 
 Form.propTypes = {
   meetings: PropTypes.array.isRequired,
-  createKey: PropTypes.func.isRequired
+  selectedMeetings: PropTypes.object.isRequired,
+  setSelectedMeetings: PropTypes.func.isRequired,
+  apiKey: PropTypes.string.isRequired,
+  createdApi: PropTypes.object.isRequired,
+  setCreatedApi: PropTypes.func.isRequired
 };
 
 export default Form;
