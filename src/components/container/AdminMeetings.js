@@ -3,11 +3,12 @@ import Form from '../form/Form';
 import getMeetings from '../../services/getMeetings';
 import Keys from '../keys/Keys';
 import styles from './AdminMeeting.css';
+import { useApiKey } from '../../hooks/hooks';
 
 const AdminMeeting = () => {
+  const { apiKey, setApiKey, clearApiKey } = useApiKey();
   const [meetings, setMeetings] = useState([]);
   const [selectedMeetings, setSelectedMeetings] = useState({});
-  const [apiKey, setApiKey] = useState();
   const [createdApi, setCreatedApi] = useState({
     id: null
   });
@@ -18,19 +19,11 @@ const AdminMeeting = () => {
       getMeetings(apiKey)
         .then(setMeetings);
     }
-    
-    const apiKeyStorage = localStorage.getItem('API_KEY');
-    if(apiKeyStorage) setApiKey(apiKeyStorage);
   }, [apiKey]);
 
   const apiKeyChangeHandler = ({ target }) => {
     localStorage.setItem('API_KEY', target.value);
     setApiKey(target.value);
-  };
-
-  const clearApiKey = () => {
-    localStorage.removeItem('API_KEY');
-    setApiKey(null);
   };  
 
   if(!apiKey) return (<input type='text' onChange={apiKeyChangeHandler} placeholder='API_KEY' />);
