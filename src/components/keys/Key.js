@@ -6,7 +6,7 @@ const Key = ({ title, id, onDelete }) => (
     <h3>{title}</h3>
     <div>
       <p>{id}</p>
-      <button onClick={() => onDelete(id)}>🗑</button>
+      <button onClick={onDelete} value={id}>🗑</button>
     </div>
   </>
 );
